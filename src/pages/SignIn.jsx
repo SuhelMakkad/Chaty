@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { auth, firebase } from "../firebase/config";
+import { signUpWithGoogle, createUserWithEmail, signInWithEmail } from "../firebase/auth";
 
 import { to, validateEmail } from "../utils";
 
@@ -24,11 +24,14 @@ export default function SignIn() {
   const authenticate = async () => {
     const [res, error] = await to(
       authMode === "signUp"
-        ? auth.createUserWithEmailAndPassword(email, password)
-        : auth.signInWithEmailAndPassword(email, password)
+        ? createUserWithEmail(email, password)
+        : signInWithEmail(email, password)
     );
 
-    if (!error) return res;
+    if (!error) {
+      setUpUserProfile();
+      return res;
+    }
 
     const errorMessage = error.message;
 
@@ -58,7 +61,7 @@ export default function SignIn() {
     return null;
   };
 
-  const SignInUserWithEmail = async () => {
+  const signUpUserWithEmail = async () => {
     setError();
 
     const isValidEmail = validateEmail(email);
@@ -83,30 +86,45 @@ export default function SignIn() {
     if (!res) return;
   };
 
-  const signUpWithGoogle = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const [res, error] = await to(auth.signInWithPopup(provider));
+  const handleSignUpWithGoogle = async () => {
+    setError();
+
+    const [res, error] = await to(signUpWithGoogle());
 
     console.log({ res, error });
-
     if (error) {
       console.error(error);
-      setError("Something went wrong please try again later");
+      const errorMessage = error.message;
+
+      if (errorMessage.indexOf("popup-closed-by-user") !== -1) {
+        return;
+      }
+
+      setError("Something went wrong please try again");
       return;
     }
 
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = res.credential;
-    const token = credential.accessToken;
     const user = res.user;
-    // ...
+  };
+
+  const setUpUserProfile = async () => {
+    // console.log("Called");
+    // const citiesRef = collection(firestore, "/cities");
+    // await setDoc(doc(citiesRef, "SF"), {
+    //   name: "San Francisco",
+    //   state: "CA",
+    //   country: "USA",
+    //   capital: false,
+    //   population: 860000,
+    //   regions: ["west_coast", "norcal"],
+    // });
   };
 
   return (
     <div>
       <div className="error-message">{error ? error : ""}</div>
       <div>
-        <button onClick={signUpWithGoogle}>Continue with Google</button>
+        <button onClick={handleSignUpWithGoogle}>Continue with Google</button>
       </div>
       <div>
         <input
@@ -141,7 +159,7 @@ export default function SignIn() {
       )}
 
       <div>
-        <button type="submit" onClick={SignInUserWithEmail}>
+        <button type="submit" onClick={signUpUserWithEmail}>
           {authMode === "signIn" ? "Continue" : "Creat an Account"}
         </button>
       </div>
