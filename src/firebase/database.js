@@ -2,7 +2,6 @@ import {
   ref,
   update,
   get,
-  push,
   query,
   orderByChild,
   limitToFirst,
@@ -53,29 +52,29 @@ const searchUserByEmail = async (searchText) => {
   return users;
 };
 
-const updateUserChatIds = async (uid, uniqHash) => {
-  const chatIdsRef = ref(db, `users/${uid}/chatIds`);
-  const [snapshot, error] = await to(get(chatIdsRef));
+const updateConnectedUsers = async (uid, chatIdAndUid) => {
+  const connectedUsersRef = ref(db, `users/${uid}/connectedUsers`);
+  const [snapshot, error] = await to(get(connectedUsersRef));
 
-  const chatIds = [uniqHash];
+  const connectedUsers = [chatIdAndUid];
   if (!error) {
     snapshot.forEach((childSnapshot) => {
       const chatId = childSnapshot.val();
-      chatIds.push(chatId);
+      connectedUsers.push(chatId);
     });
   }
 
   const usersRef = ref(db, `users/${uid}`);
-  update(usersRef, { chatIds: [...new Set(chatIds)] });
+  update(usersRef, { connectedUsers: [...new Set(connectedUsers)] });
 };
 
 const addUserToChat = async (uid) => {
   const loggedInUser = getLoggedInUser();
   const loggedInUserId = loggedInUser.uid;
-  const uniqHash = hash(loggedInUserId, uid);
+  const chatId = hash(loggedInUserId, uid);
 
-  updateUserChatIds(uid, uniqHash);
-  updateUserChatIds(loggedInUserId, uniqHash);
+  updateConnectedUsers(uid, { uid: loggedInUserId, chatId });
+  updateConnectedUsers(loggedInUserId, { uid, chatId });
 };
 
 export { createUserDoc, searchUserByEmail, addUserToChat };
