@@ -8,6 +8,8 @@ import {
   limitToFirst,
   startAt,
   endAt,
+  set,
+  off,
 } from "firebase/database";
 import { db } from "./app";
 import { getLoggedInUser } from "./auth";
@@ -30,7 +32,6 @@ const setUpUserListListner = (callback) => {
   const uid = loggedInUser.uid;
 
   const connectedUsersRef = ref(db, `users/${uid}/connectedUsers`);
-
   onValue(connectedUsersRef, (snapshot) => {
     const data = snapshot.val();
 
@@ -99,4 +100,35 @@ const addUserToChat = async (uid) => {
   updateConnectedUsers(loggedInUserId, uid, chatId);
 };
 
-export { createUserDoc, setUpUserListListner, getUserDetails, searchUserByEmail, addUserToChat };
+const startListingForMessage = async (users, callback) => {
+  const loggedInUser = getLoggedInUser();
+  const loggedInUserId = loggedInUser.uid;
+
+  users.forEach((user) => {
+    const chatId = hash(loggedInUserId, user.uid);
+    const chatsRef = ref(db, `chats/${chatId}`);
+
+    off(chatsRef);
+    onValue(chatsRef, (snapshot) => {
+      const data = snapshot.val();
+      callback(chatId, data);
+    });
+  });
+};
+
+const sendMessage = (chatId, message) => {
+  const messageId = message.id;
+  const chatsRef = ref(db, `chats/${chatId}/${messageId}`);
+
+  set(chatsRef, message);
+};
+
+export {
+  createUserDoc,
+  setUpUserListListner,
+  getUserDetails,
+  searchUserByEmail,
+  addUserToChat,
+  startListingForMessage,
+  sendMessage,
+};
