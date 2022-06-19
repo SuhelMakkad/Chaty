@@ -1,11 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-import { signUpWithGoogle, createUserWithEmail, signInWithEmail } from "../firebase/auth";
+import {
+  signUpWithGoogle,
+  createUserWithEmail,
+  signInWithEmail,
+  updateUserProfile,
+} from "../firebase/auth";
+import { createUserDoc } from "../firebase/database";
 
 import { to, validateEmail } from "../utils";
 
 export default function SignIn() {
   const [authMode, setAuthMode] = useState("signIn");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -29,7 +36,6 @@ export default function SignIn() {
     );
 
     if (!error) {
-      setUpUserProfile();
       return res;
     }
 
@@ -80,10 +86,13 @@ export default function SignIn() {
       setError("Password should be at least 6 characters long");
       return;
     }
-    const res = await to(authenticate());
+    const res = await authenticate();
 
-    console.log({ res });
     if (!res) return;
+    console.log(res);
+
+    const user = res.user;
+    setUpUserProfile(user);
   };
 
   const handleSignUpWithGoogle = async () => {
@@ -105,19 +114,27 @@ export default function SignIn() {
     }
 
     const user = res.user;
+    setUpUserProfile(user);
+
+    console.log(user);
   };
 
-  const setUpUserProfile = async () => {
-    // console.log("Called");
-    // const citiesRef = collection(firestore, "/cities");
-    // await setDoc(doc(citiesRef, "SF"), {
-    //   name: "San Francisco",
-    //   state: "CA",
-    //   country: "USA",
-    //   capital: false,
-    //   population: 860000,
-    //   regions: ["west_coast", "norcal"],
-    // });
+  const setUpUserProfile = (user) => {
+    const uid = user.uid;
+    const email = user.email;
+    const imageUrl = user.photoURL;
+    let displayName = user.displayName;
+
+    if (authMode === "signUp") {
+      displayName = name;
+      const userProfile = {
+        displayName,
+      };
+
+      updateUserProfile(userProfile);
+    }
+
+    createUserDoc(uid, displayName, email, imageUrl);
   };
 
   return (
@@ -126,6 +143,19 @@ export default function SignIn() {
       <div>
         <button onClick={handleSignUpWithGoogle}>Continue with Google</button>
       </div>
+      {authMode === "signUp" ? (
+        <div>
+          <input
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+            type="text"
+            placeholder="Full Name"
+            required
+          />
+        </div>
+      ) : (
+        ""
+      )}
       <div>
         <input
           onChange={(e) => setEmail(e.target.value)}

@@ -1,5 +1,3 @@
-import auth from "./app";
-
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -7,12 +5,34 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 
-import { to } from "../utils";
+import { updateProfile, onAuthStateChanged } from "firebase/auth";
+import { auth } from "./app";
+
+const onAuthChange = (callback) => {
+  onAuthStateChanged(auth, callback);
+};
+
+const updateUserProfile = async (profile) => {
+  const currentUser = auth.currentUser;
+  const userData = {};
+
+  const name = profile.displayName;
+  const photoURL = profile.photoURL;
+
+  if (name) {
+    userData.displayName = name;
+  }
+
+  if (photoURL) {
+    userData.photoURL = photoURL;
+  }
+
+  return await updateProfile(currentUser, userData);
+};
 
 const signUpWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
-
-  return await to(signInWithPopup(auth, provider));
+  return await signInWithPopup(auth, provider);
 };
 
 const createUserWithEmail = async (email, password) => {
@@ -23,4 +43,4 @@ const signInWithEmail = async (email, password) => {
   return await signInWithEmailAndPassword(auth, email, password);
 };
 
-export { signUpWithGoogle, createUserWithEmail, signInWithEmail };
+export { signUpWithGoogle, createUserWithEmail, signInWithEmail, onAuthChange, updateUserProfile };
