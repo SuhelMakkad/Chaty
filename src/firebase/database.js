@@ -1,5 +1,6 @@
 import {
   ref,
+  onValue,
   update,
   get,
   query,
@@ -22,6 +23,38 @@ const createUserDoc = async (userId, name, email, imageUrl) => {
   };
 
   update(usersRef, data);
+};
+
+const setUpUserListListner = (callback) => {
+  const loggedInUser = getLoggedInUser();
+  const uid = loggedInUser.uid;
+
+  const connectedUsersRef = ref(db, `users/${uid}/connectedUsers`);
+
+  onValue(connectedUsersRef, (snapshot) => {
+    const data = snapshot.val();
+
+    callback(data);
+  });
+};
+
+const getUserDetails = async (uid) => {
+  if (!uid) {
+    const loggedInUser = getLoggedInUser();
+    uid = loggedInUser.uid;
+  }
+  const usersRef = ref(db, `users/${uid}`);
+
+  const [res, error] = await to(get(usersRef));
+
+  if (error) {
+    return null;
+  }
+
+  const user = res.val();
+  user.uid = uid;
+
+  return user;
 };
 
 const searchUserByEmail = async (searchText) => {
@@ -52,20 +85,9 @@ const searchUserByEmail = async (searchText) => {
   return users;
 };
 
-const updateConnectedUsers = async (uid, chatIdAndUid) => {
+const updateConnectedUsers = async (uid, newUserId, chatId) => {
   const connectedUsersRef = ref(db, `users/${uid}/connectedUsers`);
-  const [snapshot, error] = await to(get(connectedUsersRef));
-
-  const connectedUsers = [chatIdAndUid];
-  if (!error) {
-    snapshot.forEach((childSnapshot) => {
-      const chatId = childSnapshot.val();
-      connectedUsers.push(chatId);
-    });
-  }
-
-  const usersRef = ref(db, `users/${uid}`);
-  update(usersRef, { connectedUsers: [...new Set(connectedUsers)] });
+  update(connectedUsersRef, { [newUserId]: chatId });
 };
 
 const addUserToChat = async (uid) => {
@@ -73,8 +95,8 @@ const addUserToChat = async (uid) => {
   const loggedInUserId = loggedInUser.uid;
   const chatId = hash(loggedInUserId, uid);
 
-  updateConnectedUsers(uid, { uid: loggedInUserId, chatId });
-  updateConnectedUsers(loggedInUserId, { uid, chatId });
+  updateConnectedUsers(uid, loggedInUserId, chatId);
+  updateConnectedUsers(loggedInUserId, uid, chatId);
 };
 
-export { createUserDoc, searchUserByEmail, addUserToChat };
+export { createUserDoc, setUpUserListListner, getUserDetails, searchUserByEmail, addUserToChat };
