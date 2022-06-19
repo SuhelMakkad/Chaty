@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import SignIn from "./SignIn.jsx";
+import SignIn from "./pages/SignIn.jsx";
 
-import { onAuthChange } from "../firebase/auth.js";
+import { onAuthChange } from "./firebase/auth.js";
 
-import "../css/App.css";
+import "./css/App.css";
+import Home from "./pages/Home.jsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,12 +21,7 @@ function App() {
     });
   }, []);
 
-  return (
-    <div className="App">
-      {String(isLoggedIn)}
-      <SignIn />
-    </div>
-  );
+  return <div className="App">{isLoggedIn ? <Home /> : <SignIn />}</div>;
 }
 
 export default App;

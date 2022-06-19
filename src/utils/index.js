@@ -4,6 +4,37 @@ const validateEmail = (email) => {
   return String(email).toLowerCase().match(regex);
 };
 
+const debounce = function (fn, d) {
+  let timer;
+
+  return function () {
+    let context = this;
+    let args = arguments;
+
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.apply(context, args);
+    }, d);
+  };
+};
+
+function hash(...args) {
+  let h = 0;
+  let i = 0;
+
+  if (args.length === 1) {
+    for (i = 0; i < args[0].length; i++) {
+      h = (h * 31 + args[0].charCodeAt(i)) & 0xffffffff;
+    }
+    return h;
+  }
+
+  for (i in args) {
+    h ^= hash(args[i]);
+  }
+  return h;
+}
+
 const to = async (promis) => {
   try {
     const data = await promis;
@@ -14,4 +45,4 @@ const to = async (promis) => {
   }
 };
 
-export { to, validateEmail };
+export { validateEmail, debounce, hash, to };
