@@ -53,6 +53,7 @@ const getUserDetails = async (uid) => {
   }
 
   const user = res.val();
+  if (!user) return;
   user.uid = uid;
 
   return user;
@@ -105,6 +106,8 @@ const startListingForMessage = async (users, callback) => {
   const loggedInUserId = loggedInUser.uid;
 
   users.forEach((user) => {
+    if (!user) return;
+
     const chatId = hash(loggedInUserId, user.uid);
     const chatsRef = ref(db, `chats/${chatId}`);
 

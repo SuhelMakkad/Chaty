@@ -72,6 +72,7 @@ export default function Home() {
     const fetchedUsers = await Promise.all(userDetailsPromises);
 
     fetchedUsers.forEach((fetchedUser) => {
+      if (!fetchedUser) return;
       delete fetchedUser.connectedUsers;
     });
 
@@ -170,9 +171,11 @@ export default function Home() {
         ""
       )}
 
-      {userList && userList.length ? (
+      {userList && userList.length > 0 ? (
         <ol>
           {userList.map((usr) => {
+            if (!usr) return "";
+
             const uid = usr.uid;
             const email = usr.email;
             const name = usr.displayName;
