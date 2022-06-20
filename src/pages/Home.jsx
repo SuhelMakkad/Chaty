@@ -88,12 +88,14 @@ export default function Home() {
       allMessages.push(messages);
     });
 
+    const sortedByTimestamp = allMessages.sort((a, b) => a.timestamp - b.timestamp);
+
     setMessages((prev) => {
       if (!prev) {
-        return { [chatId]: allMessages };
+        return { [chatId]: sortedByTimestamp };
       }
 
-      return { ...prev, [chatId]: allMessages };
+      return { ...prev, [chatId]: sortedByTimestamp };
     });
   };
 
@@ -179,6 +181,16 @@ export default function Home() {
             const uid = usr.uid;
             const email = usr.email;
             const name = usr.displayName;
+            const chatId = chatIdMap[uid];
+            const messagesForThisChat = messages[chatId];
+
+            let lastMessage;
+            let lastMessageText = "";
+
+            if (messagesForThisChat) {
+              lastMessage = messagesForThisChat[messagesForThisChat.length - 1];
+              lastMessageText = lastMessage ? lastMessage.value : "";
+            }
 
             return (
               <li
@@ -187,7 +199,8 @@ export default function Home() {
                   setSelectedUser(usr);
                 }}
               >
-                {name || email || uid}
+                <div>{name || email || uid}</div>
+                <div>{lastMessageText}</div>
               </li>
             );
           })}
