@@ -6,16 +6,19 @@
   box-sizing: border-box;
 }
 
-html {
-  min-height: 100vh;
-}
-
 body {
+  min-height: 100vh;
   font-family: "Lato", sans-serif;
+  color: var(--clr-fc-primary);
 }
 
-button {
+button,
+input {
   font-family: inherit;
   border: 0;
   outline: 0;
+}
+
+button {
+  cursor: pointer;
 }

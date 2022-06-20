@@ -10,6 +10,8 @@ import { createUserDoc } from "../firebase/database";
 
 import { to, validateEmail } from "../utils";
 
+import "../scss/signup.scss";
+
 export default function SignIn() {
   const [authMode, setAuthMode] = useState("signIn");
   const [name, setName] = useState("");
@@ -138,65 +140,81 @@ export default function SignIn() {
   };
 
   return (
-    <div>
-      <div className="error-message">{error ? error : ""}</div>
-      <div>
-        <button onClick={handleSignUpWithGoogle}>Continue with Google</button>
-      </div>
-      {authMode === "signUp" ? (
-        <div>
-          <input
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            type="text"
-            placeholder="Full Name"
-            required
-          />
-        </div>
-      ) : (
-        ""
-      )}
-      <div>
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          type="text"
-          placeholder="Email"
-          required
-        />
-      </div>
-      <div>
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          type="password"
-          placeholder="Password"
-          required
-        />
-      </div>
-      {authMode === "signUp" ? (
-        <div>
-          <input
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            value={confirmPassword}
-            type="password"
-            placeholder="Confirm Password"
-            required
-          />
-        </div>
-      ) : (
-        ""
-      )}
+    <div className="signup">
+      <div className="signup__wrapper">
+        <h1 className="signup__logo">Chaty</h1>
 
-      <div>
-        <button type="submit" onClick={signUpUserWithEmail}>
+        {error ? <div className="signup__error">{error}</div> : ""}
+
+        <div className="signup__input-group">
+          {authMode === "signUp" ? (
+            <input
+              className="signup__input"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              type="text"
+              placeholder="Full Name"
+              required
+            />
+          ) : (
+            ""
+          )}
+          <input
+            className="signup__input"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            type="text"
+            placeholder="Email"
+            required
+          />
+          <input
+            className="signup__input"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            type="password"
+            placeholder="Password"
+            required
+          />
+          {authMode === "signUp" ? (
+            <input
+              className="signup__input"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={confirmPassword}
+              type="password"
+              placeholder="Confirm Password"
+              required
+            />
+          ) : (
+            ""
+          )}
+        </div>
+
+        <button className="signup__submit-btn" type="submit" onClick={signUpUserWithEmail}>
           {authMode === "signIn" ? "Continue" : "Creat an Account"}
         </button>
-      </div>
 
-      <div>
-        <span>{authMode === "signIn" ? "Don't have an account?" : "Already have an account?"}</span>
-        <button onClick={changeAuthMode}>{authMode === "signIn" ? "Sign up" : "Login"}</button>
+        <button className="signup__google-btn" onClick={handleSignUpWithGoogle}>
+          <picture>
+            <source srcSet="/assets/img/google_logo.webp" type="image/webp" />
+            <img
+              alt="Google Logo"
+              className="signup__google-img"
+              src="/assets/img/google_logo.png"
+              type="image/png"
+            />
+          </picture>
+
+          <span>Continue with Google</span>
+        </button>
+
+        <div className="signup__auth-toggle">
+          <span>
+            {authMode === "signIn" ? "Don't have an account?" : "Already have an account?"}
+          </span>
+          <button className="signup__auth-toggle-btn" onClick={changeAuthMode}>
+            {authMode === "signIn" ? "Sign up" : "Login"}
+          </button>
+        </div>
       </div>
     </div>
   );

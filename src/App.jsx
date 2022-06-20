@@ -4,8 +4,9 @@ import SignIn from "./pages/SignIn.jsx";
 
 import { onAuthChange } from "./firebase/auth.js";
 
-import "./css/App.css";
 import Home from "./pages/Home.jsx";
+import "./scss/App.scss";
+import "./scss/variables.scss";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -1,0 +1,89 @@
+.signup {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+  background-color: var(--clr-bg-primary);
+
+  &__wrapper {
+    background-color: var(--clr-bg-secondary);
+    padding: 1rem;
+    border-radius: var(--brd-radius);
+    width: 25rem;
+    font-size: 1.15rem;
+  }
+
+  &__logo {
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__error {
+    padding: 0.5em 0.75em;
+    margin-bottom: 1rem;
+    color: var(--clr-white);
+    background-color: var(--clr-bg-danger);
+    border-radius: var(--brd-radius);
+  }
+
+  &__input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__input {
+    font-size: 1.075rem;
+    padding: 0.5em 0.75em;
+    border-radius: var(--brd-radius);
+    background-color: var(--clr-bg-tertiary);
+    color: inherit;
+  }
+
+  &__submit-btn {
+    width: 100%;
+    font-size: 1.075rem;
+    padding: 0.4em 0.75em;
+    background-color: var(--clr-bg-accent);
+    color: var(--clr-white);
+    border-radius: var(--brd-radius);
+    margin-bottom: 2rem;
+  }
+
+  &__google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5em 0.75em;
+    margin-bottom: 1rem;
+    width: 100%;
+    color: inherit;
+    font-size: 1.075rem;
+    text-align: center;
+    background-color: var(--clr-bg-primary);
+  }
+
+  &__google-img {
+    width: 1.45rem;
+    border-radius: var(--brd-radius);
+    background-color: transparent;
+  }
+
+  &__auth-toggle {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__auth-toggle-btn {
+    background-color: transparent;
+    font-size: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
