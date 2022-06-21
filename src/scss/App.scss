@@ -1,3 +1,8 @@
+::selection {
+  background-color: var(--clr-bg-accent-50);
+  color: white;
+}
+
 *,
 *::after,
 *::before {
@@ -10,6 +15,7 @@ body {
   min-height: 100vh;
   font-family: "Lato", sans-serif;
   color: var(--clr-fc-primary);
+  background-color: var(--clr-bg-primary);
 }
 
 button,

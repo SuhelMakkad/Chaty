@@ -146,6 +146,20 @@ export default function SignIn() {
 
         {error ? <div className="signup__error">{error}</div> : ""}
 
+        <button className="signup__google-btn" onClick={handleSignUpWithGoogle}>
+          <picture>
+            <source srcSet="/assets/img/google_logo.webp" type="image/webp" />
+            <img
+              alt="Google Logo"
+              className="signup__google-img"
+              src="/assets/img/google_logo.png"
+              type="image/png"
+            />
+          </picture>
+
+          <span>Continue with Google</span>
+        </button>
+
         <div className="signup__input-group">
           {authMode === "signUp" ? (
             <input
@@ -191,20 +205,6 @@ export default function SignIn() {
 
         <button className="signup__submit-btn" type="submit" onClick={signUpUserWithEmail}>
           {authMode === "signIn" ? "Continue" : "Creat an Account"}
-        </button>
-
-        <button className="signup__google-btn" onClick={handleSignUpWithGoogle}>
-          <picture>
-            <source srcSet="/assets/img/google_logo.webp" type="image/webp" />
-            <img
-              alt="Google Logo"
-              className="signup__google-img"
-              src="/assets/img/google_logo.png"
-              type="image/png"
-            />
-          </picture>
-
-          <span>Continue with Google</span>
         </button>
 
         <div className="signup__auth-toggle">
