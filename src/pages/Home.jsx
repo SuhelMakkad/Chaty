@@ -12,6 +12,11 @@ import {
 
 import { debounce } from "../utils";
 
+import MessagesSection from "../components/MessagesSection";
+import UserListSection from "../components/UserListSection";
+
+import "../scss/main.scss";
+
 export default function Home() {
   const [user, setUser] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -138,101 +143,27 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <div>{user ? user.uid : ""}</div>
-      <button onClick={signOut}>Sign out</button>
-
-      <div>
-        <input
-          onChange={debounce(handleSearchInputChange, 300)}
-          type="text"
-          placeholder="Add new user"
-        />
-      </div>
-
-      {searchedUsers && searchedUsers.length ? (
-        <ul>
-          {searchedUsers.map((searchedUser) => {
-            const email = searchedUser.email;
-            const name = searchedUser.displayName;
-            const uid = searchedUser.uid;
-
-            return (
-              <li key={uid}>
-                <div>{uid}</div>
-                <div>{email}</div>
-                <div>{name}</div>
-                <button onClick={() => addUser(uid)}>Add</button>
-              </li>
-            );
-          })}
-        </ul>
-      ) : isSearching ? (
-        "No User Found"
-      ) : (
-        ""
-      )}
-
-      {userList && userList.length > 0 ? (
-        <ol>
-          {userList.map((usr) => {
-            if (!usr) return "";
-
-            const uid = usr.uid;
-            const email = usr.email;
-            const name = usr.displayName;
-            const chatId = chatIdMap[uid];
-            const messagesForThisChat = messages[chatId];
-
-            let lastMessage;
-            let lastMessageText = "";
-
-            if (messagesForThisChat) {
-              lastMessage = messagesForThisChat[messagesForThisChat.length - 1];
-              lastMessageText = lastMessage ? lastMessage.value : "";
-            }
-
-            return (
-              <li
-                key={uid}
-                onClick={() => {
-                  setSelectedUser(usr);
-                }}
-              >
-                <div>{name || email || uid}</div>
-                <div>{lastMessageText}</div>
-              </li>
-            );
-          })}
-        </ol>
-      ) : (
-        ""
-      )}
-
-      {selectedUser ? (
-        <div>
-          <div>{chatIdMap[selectedUser.uid]}</div>
-
-          {selectedChatMessages && selectedChatMessages.length
-            ? selectedChatMessages.map((message) => {
-                return <div key={message.id}>{message.value}</div>;
-              })
-            : ""}
-
-          <input
-            onChange={(e) => setMessage(e.target.value)}
-            value={message}
-            type="text"
-            placeholder="Enter your message"
-          />
-
-          <div>
-            <button onClick={handleMessageSend}>Send</button>
-          </div>
-        </div>
-      ) : (
-        "No User Selected"
-      )}
-    </div>
+    <main className="main">
+      <UserListSection
+        handleSearchInputChange={debounce(handleSearchInputChange, 300)}
+        isSearching={isSearching}
+        searchedUsers={searchedUsers}
+        setSelectedUser={setSelectedUser}
+        signOut={signOut}
+        user={user}
+        userList={userList}
+        addUser={addUser}
+        chatIdMap={chatIdMap}
+        messages={messages}
+      />
+      <MessagesSection
+        message={message}
+        chatIdMap={chatIdMap}
+        handleMessageSend={handleMessageSend}
+        selectedChatMessages={selectedChatMessages}
+        selectedUser={selectedUser}
+        setMessage={setMessage}
+      />
+    </main>
   );
 }
