@@ -19,6 +19,7 @@ function SearchBar({ handleSearchInputChange, searchedUsers, addUser, isSearchin
         id="search-bar__input"
         className="search-bar__input"
         type="text"
+        autoComplete="off"
         placeholder="Add new user"
       />
       <label className="search-bar__search-icon" htmlFor="search-bar__input">
