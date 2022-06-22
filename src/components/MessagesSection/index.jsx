@@ -47,6 +47,9 @@ function MessagesSection({
           <input
             className="messages__input"
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              e.key === "Enter" && handleMessageSend();
+            }}
             value={message}
             type="text"
             placeholder="Enter your message"
