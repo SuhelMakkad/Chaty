@@ -116,7 +116,9 @@ export default function Home() {
       type: "text",
       value: message,
       timestamp,
+      sentBy: user.uid,
     };
+
     sendMessage(chatId, messageObj);
   };
 
@@ -155,6 +157,7 @@ export default function Home() {
         messages={messages}
       />
       <MessagesSection
+        user={user}
         message={message}
         chatIdMap={chatIdMap}
         handleMessageSend={handleMessageSend}
