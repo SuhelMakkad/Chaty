@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import SearchedUsersList from "./SearchedUsersList";
 
@@ -6,16 +6,15 @@ import "./styles.scss";
 
 function SearchBar({ handleSearchInputChange, searchedUsers, addUser, isSearching }) {
   const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    handleSearchInputChange(searchText);
+  }, [searchText]);
   return (
     <div className="search-bar">
       <input
         value={searchText}
-        onChange={(e) => {
-          const searchTxt = e.target.value;
-          console.log(searchTxt);
-          setSearchText(searchTxt);
-          handleSearchInputChange(searchTxt);
-        }}
+        onChange={(e) => setSearchText(e.target.value)}
         id="search-bar__input"
         className="search-bar__input"
         type="text"
