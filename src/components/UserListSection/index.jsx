@@ -19,7 +19,7 @@ function UserListSection({
   messages,
 }) {
   return (
-    <div className="right-section">
+    <div className="left-section-wrapper">
       {user && <UserTile title={user.displayName} photoURL={user.photoURL} />}
 
       {/* <button onClick={signOut}>Sign out</button> */}

@@ -1,5 +1,6 @@
-.right-section {
-  max-width: 21rem;
+.left-section-wrapper {
+  width: 21rem;
   background-color: var(--clr-bg-secondary);
-  flex-grow: 1;
+  flex-shrink: 0;
+  border-right: 1px solid var(--clr-bg-secondary);
 }

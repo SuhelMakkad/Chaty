@@ -39,6 +39,10 @@ ul {
   cursor: pointer;
 }
 
+.bg-secondary {
+  background-color: var(--clr-bg-secondary);
+}
+
 .material-icons {
   font-family: "Material Icons";
   font-weight: normal;

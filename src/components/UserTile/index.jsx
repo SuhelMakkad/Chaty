@@ -4,9 +4,9 @@ import Avatar from "../Avatar";
 
 import "./styles.scss";
 
-function UserTile({ photoURL, title, subTitle, action, actionIcon }) {
+function UserTile({ photoURL, title, subTitle, action, actionIcon, className }) {
   return (
-    <div className="user-tile">
+    <div className={`user-tile ${className}`}>
       <Avatar photoURL={photoURL} />
 
       <div className="user-tile__text">

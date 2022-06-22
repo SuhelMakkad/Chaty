@@ -1,0 +1,11 @@
+.right-section-wrapper {
+  width: 100%;
+}
+
+.selected-chat-top-bar {
+  background-color: var(--clr-bg-secondary);
+
+  &:hover {
+    background-color: var(--clr-bg-secondary);
+  }
+}
