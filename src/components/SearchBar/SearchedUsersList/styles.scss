@@ -1,0 +1,15 @@
+.empty-search-message,
+.searched-users {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--clr-bg-secondary);
+  backdrop-filter: blur(6px);
+}
+
+.empty-search-message {
+  padding: 1rem;
+  border-bottom-left-radius: var(--brd-radius);
+  border-bottom-right-radius: var(--brd-radius);
+}

@@ -1,7 +1,8 @@
 .search-bar {
+  position: relative;
   display: flex;
   align-items: center;
-  margin: 1rem;
+  margin: 0 1rem 1rem;
   padding: 0.5rem 1rem;
 
   background-color: var(--clr-bg-tertiary);

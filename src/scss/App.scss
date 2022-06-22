@@ -20,13 +20,22 @@ body {
 
 button,
 input {
+  color: inherit;
   font-family: inherit;
   border: 0;
   outline: 0;
-  color: inherit;
 }
 
 button {
+  cursor: pointer;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+.cp {
   cursor: pointer;
 }
 

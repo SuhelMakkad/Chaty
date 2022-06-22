@@ -24,30 +24,12 @@ function UserListSection({
 
       {/* <button onClick={signOut}>Sign out</button> */}
 
-      <SearchBar onChange={handleSearchInputChange} />
-
-      {searchedUsers && searchedUsers.length ? (
-        <ul>
-          {searchedUsers.map((searchedUser) => {
-            const email = searchedUser.email;
-            const name = searchedUser.displayName;
-            const uid = searchedUser.uid;
-
-            return (
-              <li key={uid}>
-                <div>{uid}</div>
-                <div>{email}</div>
-                <div>{name}</div>
-                <button onClick={() => addUser(uid)}>Add</button>
-              </li>
-            );
-          })}
-        </ul>
-      ) : isSearching ? (
-        "No User Found"
-      ) : (
-        ""
-      )}
+      <SearchBar
+        handleSearchInputChange={handleSearchInputChange}
+        searchedUsers={searchedUsers}
+        addUser={addUser}
+        isSearching={isSearching}
+      />
 
       {userList && userList.length > 0 ? (
         <ol>

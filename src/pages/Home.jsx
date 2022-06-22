@@ -28,9 +28,7 @@ export default function Home() {
   const [selectedChatMessages, setSelectedChatMessages] = useState([]);
   const [chatIdMap, SetChatIdMap] = useState({});
 
-  const handleSearchInputChange = async (e) => {
-    const searchText = e.target.value;
-
+  const handleSearchInputChange = async (searchText) => {
     if (!searchText.length) {
       setIsSearching(false);
       setSearchedUsers([]);

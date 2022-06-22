@@ -4,7 +4,7 @@ import Avatar from "../Avatar";
 
 import "./styles.scss";
 
-function UserTile({ photoURL, title, subTitle }) {
+function UserTile({ photoURL, title, subTitle, action, actionIcon }) {
   return (
     <div className="user-tile">
       <Avatar photoURL={photoURL} />
@@ -13,6 +13,12 @@ function UserTile({ photoURL, title, subTitle }) {
         <span className="user-tile__title">{title}</span>
         <span className="user-tile__sub-title"> {subTitle}</span>
       </div>
+
+      {action && (
+        <button onClick={action} className="user-tile__action-btn">
+          <span className="material-icons">{actionIcon}</span>
+        </button>
+      )}
     </div>
   );
 }
