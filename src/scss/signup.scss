@@ -1,13 +1,13 @@
 .signup {
   min-height: 100vh;
-  background-color: var(--clr-bg-primary);
+  background-color: var(--clr-bg-base);
 
   &__wrapper {
     position: absolute;
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--clr-bg-secondary);
+    background-color: var(--clr-bg-surface-2);
     padding: 1rem;
     border-radius: var(--brd-radius);
     width: 25rem;
@@ -39,12 +39,12 @@
     font-size: 1.075rem;
     padding: 0.5em 0.75em;
     border-radius: var(--brd-radius);
-    background-color: var(--clr-bg-tertiary);
+    background-color: var(--clr-bg-surface-1);
     color: inherit;
     transition: border-bottom 200ms;
 
     &:focus {
-      border-bottom: 3px solid var(--clr-bg-accent-50);
+      border-bottom: 3px solid var(--clr-bg-primary-50);
     }
   }
 
@@ -52,7 +52,7 @@
     width: 100%;
     font-size: 1.075rem;
     padding: 0.4em 0.75em;
-    background-color: var(--clr-bg-accent);
+    background-color: var(--clr-bg-primary);
     color: var(--clr-white);
     border-radius: var(--brd-radius);
     margin-bottom: 1.5rem;
@@ -69,7 +69,7 @@
     color: inherit;
     font-size: 1.075rem;
     text-align: center;
-    background-color: var(--clr-bg-primary);
+    background-color: var(--clr-bg-base);
     transition: opacity 200ms;
 
     &:hover,

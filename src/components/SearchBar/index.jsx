@@ -12,6 +12,11 @@ function SearchBar({ handleSearchInputChange, searchedUsers, addUser, isSearchin
   }, [searchText]);
   return (
     <div className="search-bar">
+      <label className="search-bar__search-icon" htmlFor="search-bar__input">
+        <span onClick={() => setSearchText("")} className="material-icons cp">
+          {searchText ? "close" : "search"}
+        </span>
+      </label>
       <input
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
@@ -21,12 +26,6 @@ function SearchBar({ handleSearchInputChange, searchedUsers, addUser, isSearchin
         autoComplete="off"
         placeholder="Add new user"
       />
-      <label className="search-bar__search-icon" htmlFor="search-bar__input">
-        <span onClick={() => setSearchText("")} className="material-icons cp">
-          {searchText ? "close" : "search"}
-        </span>
-      </label>
-
       <SearchedUsersList
         searchedUsers={searchedUsers}
         addUser={addUser}

@@ -1,6 +1,21 @@
 .left-section-wrapper {
   width: 21rem;
-  background-color: var(--clr-bg-secondary);
+  background-image: var(--gradient);
   flex-shrink: 0;
-  border-right: 1px solid var(--clr-bg-secondary);
+  border-right: 1px solid var(--clr-bg-surface-2);
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.logged-in-user-tile {
+  &:hover {
+    background-color: inherit;
+  }
+}
+
+.selected-user {
+  &,
+  &:hover {
+    background-color: var(--clr-bg-surface-opp-2);
+  }
 }

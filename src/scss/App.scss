@@ -1,5 +1,5 @@
 ::selection {
-  background-color: var(--clr-bg-accent-50);
+  background-color: var(--clr-bg-primary-50);
   color: white;
 }
 
@@ -16,7 +16,7 @@ body {
   min-height: 100vh;
   font-family: "Lato", sans-serif;
   color: var(--clr-fc-primary);
-  background-color: var(--clr-bg-primary);
+  background-color: var(--clr-bg-base);
 }
 
 button,
@@ -41,7 +41,7 @@ ul {
 }
 
 .bg-secondary {
-  background-color: var(--clr-bg-secondary);
+  background-color: var(--clr-bg-surface-2);
 }
 
 .material-icons {

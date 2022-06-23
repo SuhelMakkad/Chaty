@@ -138,6 +138,7 @@ export default function Home() {
         handleSearchInputChange={debounce(handleSearchInputChange, 300)}
         isSearching={isSearching}
         searchedUsers={searchedUsers}
+        selectedUser={selectedUser}
         setSelectedUser={setSelectedUser}
         signOut={signOut}
         user={user}

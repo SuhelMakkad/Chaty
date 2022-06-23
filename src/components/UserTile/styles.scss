@@ -3,11 +3,11 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem;
-  cursor: pointer;
   transition: background-color 150ms;
+  cursor: pointer;
 
   &:hover {
-    background-color: var(--clr-bg-tertiary);
+    background-color: var(--clr-bg-surface-1);
   }
 
   &__text {
@@ -28,11 +28,12 @@
 
   &__title {
     font-size: 1.2rem;
-    color: var(--clr-bg-accent-50);
+    font-weight: 500;
   }
 
   &__sub-title {
     font-size: 0.95rem;
+    opacity: 0.8;
   }
 
   &__action-btn {
@@ -42,7 +43,7 @@
 
     &:hover {
       transform: scale(1.1);
-      color: var(--clr-bg-accent-50);
+      color: var(--clr-bg-primary-50);
     }
   }
 }

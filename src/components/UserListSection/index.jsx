@@ -13,6 +13,7 @@ function UserListSection({
   searchedUsers,
   isSearching,
   userList,
+  selectedUser,
   setSelectedUser,
   addUser,
   chatIdMap,
@@ -22,6 +23,7 @@ function UserListSection({
     <div className="left-section-wrapper">
       {user && (
         <UserTile
+          className="logged-in-user-tile"
           title={user.displayName}
           photoURL={user.photoURL}
           action={signOut}
@@ -47,6 +49,7 @@ function UserListSection({
             const email = usr.email;
             const name = usr.displayName;
             const photoURL = usr.photoURL;
+            const selectedUserId = selectedUser?.uid;
             const chatId = chatIdMap[uid];
             const messagesForThisChat = messages[chatId];
 
@@ -65,7 +68,12 @@ function UserListSection({
                   setSelectedUser(usr);
                 }}
               >
-                <UserTile photoURL={photoURL} title={name || email} subTitle={lastMessageText} />
+                <UserTile
+                  className={selectedUserId === uid && "selected-user"}
+                  photoURL={photoURL}
+                  title={name || email}
+                  subTitle={lastMessageText}
+                />
                 {index < userList.length - 1 && <Divider />}
               </li>
             );

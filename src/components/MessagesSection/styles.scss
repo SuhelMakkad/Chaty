@@ -5,10 +5,10 @@
 }
 
 .selected-chat-top-bar {
-  background-color: var(--clr-bg-secondary);
+  background-color: var(--clr-bg-surface-2);
 
   &:hover {
-    background-color: var(--clr-bg-secondary);
+    background-color: var(--clr-bg-surface-2);
   }
 }
 
@@ -23,17 +23,17 @@
     padding: 0.75rem;
     margin: 1rem;
     max-width: 22rem;
-    background-color: var(--clr-bg-secondary);
+    background-color: var(--clr-bg-surface-2);
     border-radius: var(--brd-radius);
   }
 
   &__item--sent {
     margin-left: auto;
-    background-color: var(--clr-bg-accent);
+    background-color: var(--clr-bg-primary);
   }
 
   &__send {
-    background-color: var(--clr-bg-secondary);
+    background-color: var(--clr-bg-surface-1);
     display: flex;
     gap: 1rem;
     padding: 1rem;
@@ -49,7 +49,7 @@
 
   &__send-btn {
     background-color: transparent;
-    color: var(--clr-bg-accent-50);
+    color: var(--clr-bg-primary-50);
     display: grid;
     place-content: center;
     width: 3rem;
