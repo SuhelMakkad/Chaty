@@ -6,6 +6,8 @@
   width: 100%;
   background-color: var(--clr-bg-surface-2);
   backdrop-filter: blur(6px);
+  z-index: 1;
+  border-top: 1px solid var(--clr-bg-surface-2);
 }
 
 .empty-search-message {
