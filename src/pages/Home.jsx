@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuid } from "uuid";
 import { signOut } from "../firebase/auth";
 import {
   searchUserByEmail,
@@ -23,7 +22,6 @@ export default function Home() {
   const [userList, setUserList] = useState([]);
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState({});
   const [selectedChatMessages, setSelectedChatMessages] = useState([]);
   const [chatIdMap, setChatIdMap] = useState({});
@@ -108,16 +106,8 @@ export default function Home() {
     startListingForMessage(userList, handleIncommingMessages);
   };
 
-  const handleMessageSend = async () => {
-    const timestamp = Date.now();
+  const handleMessageSend = async (messageObj) => {
     const chatId = chatIdMap[selectedUser.uid];
-    const messageObj = {
-      id: uuid(),
-      type: "text",
-      value: message,
-      timestamp,
-      sentBy: user.uid,
-    };
 
     sendMessage(chatId, messageObj);
   };
@@ -158,12 +148,10 @@ export default function Home() {
       />
       <MessagesSection
         user={user}
-        message={message}
         chatIdMap={chatIdMap}
         handleMessageSend={handleMessageSend}
         selectedChatMessages={selectedChatMessages}
         selectedUser={selectedUser}
-        setMessage={setMessage}
       />
     </main>
   );

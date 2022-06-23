@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import { v4 as uuid } from "uuid";
 
 import UserTile from "../UserTile";
 import UserMessage from "../UserMessage";
 
 import "./styles.scss";
 
-function MessagesSection({
-  user,
-  chatIdMap,
-  selectedUser,
-  selectedChatMessages,
-  message,
-  setMessage,
-  handleMessageSend,
-}) {
+function MessagesSection({ user, selectedUser, selectedChatMessages, handleMessageSend }) {
+  const [message, setMessage] = useState("");
+
+  const sendMessage = () => {
+    const timestamp = Date.now();
+    const messageObj = {
+      id: uuid(),
+      type: "text",
+      value: message,
+      timestamp,
+      sentBy: user.uid,
+    };
+
+    handleMessageSend(messageObj);
+    setMessage("");
+  };
+
   return selectedUser ? (
     <div className="right-section-wrapper">
       <UserTile
@@ -48,14 +57,14 @@ function MessagesSection({
             className="messages__input"
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => {
-              e.key === "Enter" && handleMessageSend();
+              e.key === "Enter" && sendMessage();
             }}
             value={message}
             type="text"
             placeholder="Enter your message"
           />
 
-          <button className="messages__send-btn" onClick={handleMessageSend}>
+          <button className="messages__send-btn" onClick={sendMessage}>
             <span className="material-icons">send</span>
           </button>
         </div>
