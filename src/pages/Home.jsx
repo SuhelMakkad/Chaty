@@ -26,7 +26,7 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState({});
   const [selectedChatMessages, setSelectedChatMessages] = useState([]);
-  const [chatIdMap, SetChatIdMap] = useState({});
+  const [chatIdMap, setChatIdMap] = useState({});
 
   const handleSearchInputChange = async (searchText) => {
     if (!searchText.length) {
@@ -70,7 +70,7 @@ export default function Home() {
       userDetailsPromises.push(getUserDetails(uid));
     });
 
-    SetChatIdMap(chatIdAndUserIdMap);
+    setChatIdMap(chatIdAndUserIdMap);
 
     const fetchedUsers = await Promise.all(userDetailsPromises);
 
@@ -110,7 +110,7 @@ export default function Home() {
 
   const handleMessageSend = async () => {
     const timestamp = Date.now();
-    const chatId = user.connectedUsers[selectedUser.uid];
+    const chatId = chatIdMap[selectedUser.uid];
     const messageObj = {
       id: uuid(),
       type: "text",

@@ -74,6 +74,11 @@ export default function SignIn() {
 
     const isValidEmail = validateEmail(email);
 
+    if (authMode === "signUp" && !name) {
+      setError("Please enter your full name");
+      return;
+    }
+
     if (!isValidEmail) {
       setError("Please enter a valid email");
       return;

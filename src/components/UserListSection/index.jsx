@@ -20,7 +20,14 @@ function UserListSection({
 }) {
   return (
     <div className="left-section-wrapper">
-      {user && <UserTile title={user.displayName} photoURL={user.photoURL} />}
+      {user && (
+        <UserTile
+          title={user.displayName}
+          photoURL={user.photoURL}
+          action={signOut}
+          actionIcon="logout"
+        />
+      )}
 
       {/* <button onClick={signOut}>Sign out</button> */}
 
@@ -32,7 +39,7 @@ function UserListSection({
       />
 
       {userList && userList.length > 0 ? (
-        <ol>
+        <ul>
           {userList.map((usr, index) => {
             if (!usr) return "";
 
@@ -63,7 +70,7 @@ function UserListSection({
               </li>
             );
           })}
-        </ol>
+        </ul>
       ) : (
         ""
       )}
